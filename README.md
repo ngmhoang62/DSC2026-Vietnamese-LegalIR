@@ -220,19 +220,3 @@ To verify the final fusion metric against the immutable historical benchmark:
 ```bash
 python reproduce_gold_local_cv.py verify-cv
 ```
-
----
-
-## 📜 Citation & Acknowledgments
-
-This solution was engineered for the **UIT Data Science Challenge 2026**. Special thanks to the organizers at University of Information Technology (VNU-HCM) for providing the benchmark datasets and computational testbed.
-
-```bibtex
-@misc{dsc2026_legalir_top7,
-  author = {Nguyen Minh Hoang},
-  title  = {Dual-Stage Vietnamese Legal Information Retrieval with Multi-Encoder Screening and Logit-Centered LLM Reranking},
-  year   = {2026},
-  publisher = {GitHub},
-  howpublished = {\url{https://github.com/ngmhoang62/endgame}}
-}
-```
