@@ -1,16 +1,21 @@
 # Python / venv
 /.venv/
 venv/
+env/
+dsc_env/
 __pycache__/
 *.py[cod]
 .pytest_cache/
 .ipynb_checkpoints/
 
-# IDE / OS
+# IDE / OS / Agents
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
+.agents/
+*.log
+*.out
 
 # Secrets / local config
 .env
@@ -35,10 +40,10 @@ fine_tuned_models/
 *.index
 *.tar.gz
 
-# Raw official corpus files remain local.
+# Raw official corpus files remain local
 data/official_v1/selected-contexts/**
 
-# Rebuilt retrieval corpus is reproducible from official snapshot but large.
+# Rebuilt retrieval corpus is reproducible from official snapshot but large
 data/evaluation_v2/retrieval_corpus_8512.jsonl
 
 # Large DB / temp
@@ -48,8 +53,14 @@ data/evaluation_v2/retrieval_corpus_8512.jsonl
 *.tmp
 *.temp
 
-# Submission ZIP bytes are local.
+# Submission ZIP bytes are local
 submissions/**/*.zip
+
+# LegalIR Research Archive local data & cache
+research_archive/**/cache/
+research_archive/**/results/
+research_archive/**/public_test_dataset/
+research_archive/**/stats/
 
 # Keep lightweight scientific evidence versioned:
 #   data/official_v1/*.json (except selected-contexts/)

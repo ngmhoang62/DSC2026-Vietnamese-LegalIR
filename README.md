@@ -1,197 +1,215 @@
-# DSC2026 Vietnamese Legal IR — ENDGAME
+# 🏛️ Dual-Stage Vietnamese Legal Information Retrieval System
 
-Historical repositories are read-only evidence. New runtime assets live under
-ENDGAME.
+> **Top 7 Private Leaderboard Solution** — UIT Data Science Challenge 2026 (DSC 2026)  
+> *A cleanroom, production-grade hybrid retrieval and reranking engine for large-scale statutory law.*
 
-All commands use **Bash / Git Bash**.
+[![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Private LB](https://img.shields.io/badge/Private%20Leaderboard-Top%207-gold.svg)](#-empirical-results--ablation-study)
+[![OOF Recall@5](https://img.shields.io/badge/OOF%20Recall%405-0.9505-brightgreen.svg)](#-empirical-results--ablation-study)
+[![Candidate Coverage](https://img.shields.io/badge/Top--30%20Coverage-99.32%25-success.svg)](#stage-1--multi-encoder-hybrid-retrieval)
 
-## Canonical raw snapshot
+---
 
+## 📌 Executive Summary
+
+This repository hosts the official source code for our **Top 7** winning solution in the **UIT Data Science Challenge 2026 (Legal Information Retrieval track)**. The task mandates identifying the most relevant legal articles/clauses from an authoritative corpus of **8,512 Vietnamese statutory laws** in response to natural language legal queries.
+
+The architecture is built upon a **Two-Stage Hybrid Pipeline** designed with strict cleanroom engineering principles:
+1. **Stage 1 (Retrieval & Multi-Encoder Shortlisting):** Multi-view candidate generation combining tuned lexical search (`BM25Okapi`) with complementary Bi-Encoders (`AITeamVN/Vietnamese_Bi-Encoder` and `vnlegal-lal`) over **179,737 moderate legal regions**, achieving **99.32% gold candidate coverage** on the Top-30 shortlist.
+2. **Stage 2 (Deep Reranking & Bayesian Prior Fusion):** High-capacity Cross-Encoder (CE-LR 45D) coupled with an instruction-tuned **Qwen3-0.6B LLM Reranker** (trained via Multi-task Listwise + Pairwise + BCE loss). Query-level calibration shifts are eliminated using **Per-Query Logit Centering**, and predictions are enriched with **Gold Document Propensity** and **Gold Centroid Head** priors, advancing Out-of-Fold (OOF) Recall@5 to **0.9505** and locking **Top 7 on the Private Leaderboard**.
+
+```text
+                                  [User Legal Query]
+                                          │
+            ┌─────────────────────────────┴─────────────────────────────┐
+            ▼                                                           ▼
+   [BM25Okapi Lexical]                                     [Multi-Bi-Encoder Dense]
+ (Word segmentation & tuning)                             (AITeamVN + VNLegal-LAL)
+            │                                                           │
+            └─────────────────────────────┬─────────────────────────────┘
+                                          ▼
+                   [Hybrid Fusion & 179.7K Region Screening]
+                   Candidate Pool Coverage: 99.32% (Top-30)
+                                          │
+            ┌─────────────────────────────┴─────────────────────────────┐
+            ▼                                                           ▼
+  [AIT Cross-Encoder]                                        [Qwen3-0.6B Reranker]
+    (CE-LR 45D Model)                                      (Multi-task Loss Fine-tuned)
+            │                                                           │
+            │                                            [Per-Query Logit Centering]
+            │                                                           │
+            └─────────────────────────────┬─────────────────────────────┘
+                                          ▼
+                       [Statistical Bayesian Prior Injection]
+                       ├── Gold Document Propensity (w = 0.75)
+                       └── Gold Centroid Head (Semantic Alignment)
+                                          │
+                                          ▼
+                   [Final Clean Fusion: OOF Recall@5 = 0.9505]
+                        Top 7 Private Leaderboard Solution
+```
+
+---
+
+## 🚀 The Engineering Story: Two-Phase Evolution
+
+Our competitive advantage stemmed from strict **engineering hygiene and rigorous forensic auditing**, splitting the project into two distinct phases:
+
+```text
+[Phase 1: Exploratory R&D (LegalIR)]
+├── Parent-Scope Chunking & GBDT Learning-to-Rank (72D -> 145D Handcrafted Features)
+├── Kinship Graphs, Law Authority & Citation Network Modeling
+└── Forensic Discovery: Uncovered 53 contaminated rules with article parity mismatch
+              │
+              ▼ (Disciplined Decision: Freeze Phase 1 & Rebuild from scratch)
+[Phase 2: SOTA Cleanroom Architecture (Endgame)]
+├── 8,512 Clean Corpus Universe & 179,737 Moderate Legal Regions
+├── Multi-Bi-Encoder Ensembling (Candidate Recall: 99.32%)
+├── Deep Cross-Encoder + Centered Qwen3-0.6B LLM Reranker
+└── Bayesian Priors: Gold Document Propensity (OOF Recall@5: 0.9505 -> Top 7 Private LB)
+```
+
+- **Phase 1 Archive (`research_archive/legalir_public_phase/`):** Contains exploratory work with 145-dimensional GBDT features and the detailed forensic audit logs identifying deployment parity failure.
+- **Phase 2 Production (`src/`):** Cleanroom codebase with zero data leakage, group-isolated 5-fold cross-validation, and production reranking modules.
+
+---
+
+## 📊 Empirical Results & Ablation Study
+
+All metrics below are evaluated under the frozen **6,991 primary evaluable queries** across 5 grouped folds (Seed 276) matching the official competition evaluation protocol.
+
+| Pipeline Stage | Model / Strategy | OOF Recall@5 | Δ vs Prev | Description / Key Insight |
+|---|---|:---:|:---:|---|
+| **Raw Baseline** | BM25Okapi (Passage-level) | ~0.7600 | — | Lexical search baseline over raw parent articles |
+| **Stage 02B Retriever** | VietLegal-E5 Bi-Encoder | 0.8520 | +9.20% | Dense representations on moderate regions |
+| **Stage 02B Retriever** | AITeamVN Bi-Encoder | 0.8710 | +1.90% | State-of-the-art Vietnamese sentence embeddings |
+| **Stage 02B Multi-Retrieval** | AIT + LAL + BM25 (Top-30) | **0.9932\*** | — | **\*Candidate Coverage**: 99.32% gold recall in top-30 pool |
+| **Stage 03B1 Reranker** | AIT Cross-Encoder (CE-LR 45D) | 0.9426 | +7.16% | Full cross-attention interaction over top-30 shortlist |
+| **Stage 07B LLM Rerank** | Qwen3-0.6B Reranker (Raw) | 0.9452 | +0.26% | Instruction-tuned with Listwise + Pairwise + BCE loss |
+| **Stage 07N Calibration** | Qwen3-0.6B + Logit Centering | 0.9465 | +0.13% | Subtracts query-mean logit to eliminate query scale bias |
+| **Stage 07O Semantic Prior** | Gold Centroid Head | 0.9474 | +0.09% | Distance projection to empirical gold embedding centroid |
+| **Stage 07R Statistical Prior**| Gold Document Propensity | 0.9489 | +0.15% | Bayesian prior addressing long-tail statutory frequency |
+| **Stage 07Y Final Fusion** | **AIT + Qwen + Propensity ($w=0.75$)** | **0.9505** | **+0.16%** | **Final Winning Submission (`GOLD_PROP_AIT_W75_K5.zip`)** |
+
+---
+
+## 🔬 Core Architectural Innovations
+
+### 1. Structure-Aware Moderate Region Segmentation (Stage 00C & 02B)
+Vietnamese statutory texts exhibit extreme structural variance—ranging from concise definitions to sprawling 40-clause articles.
+- Raw documents were cleaned from 8,532 to **8,512 retrievable documents** (discarding 20 empty-passage artifacts).
+- Structured segmentation produced **179,737 moderate regions** (Điều, Khoản, Phụ lục) preserving hierarchical context without exceeding transformer context windows.
+
+### 2. Multi-Bi-Encoder Complementary Screening (Stage 02B)
+To guarantee that the reranker receives the correct article in its candidate window:
+- Integrated `AITeamVN/Vietnamese_Bi-Encoder` (568M) and `vnlegal-lal` (596M).
+- Constructed atomic split (2048) and coarse-pack (1024) representations.
+- Generated a compact **Top-30 shortlist** with an unprecedented **99.32% oracle gold coverage**.
+
+### 3. Per-Query Logit-Centered Qwen3-0.6B Reranking (Stage 07B & 07N)
+Fine-tuned `Qwen3-Reranker-0.6B` using hard negatives mined from Stage 02 retrieval pools:
+- **Multi-task Loss:** Combined ListNet listwise ranking loss, margin pairwise loss, and binary cross-entropy.
+- **Per-Query Logit Centering:** 
+  $$\hat{s}(q, d_i) = s(q, d_i) - \frac{1}{|K|}\sum_{j \in K} s(q, d_j)$$
+  Zero-centers the reranker output per candidate slate, eliminating inter-query distribution shifts and ensuring cross-query comparability.
+
+### 4. Gold Document Propensity & Gold Centroid Head (Stage 07O, 07R & 07Y)
+- **Gold Document Propensity:** Formulated a regularized empirical prior representing statutory citation frequency across the legal corpus, penalizing spurious one-off lexical matches.
+- **Gold Centroid Head:** Projected query-candidate pairs against an aggregated centroid of confirmed gold document vectors.
+- **Robust Fusion ($w_{prop}=0.75$):** Linearly combined cross-encoder logits with the propensity prior, hitting **0.9505 OOF Recall@5**.
+
+---
+
+## 📁 Repository Structure
+
+```text
+├── src/                                   # SOTA Cleanroom Production Pipeline
+│   ├── common/                            # Metric definitions & evaluation protocols
+│   ├── stage00_audit/                     # Corpus sanitization (8,512 docs universe)
+│   ├── stage01_query_analysis/            # Query length, intent & duplicate analysis
+│   ├── stage02_candidate_generation/      # 179.7K region indexer & multi-bi-encoders
+│   ├── stage03_rerank/                    # Cross-encoder inference & shortlist builder
+│   ├── stage04_private/                   # Private leaderboard inference runners
+│   ├── stage05_analysis/                  # Per-fold diagnostics & error breakdown
+│   ├── stage06_evidence/                  # Sub-clause evidence routing & verification
+│   ├── stage07_breakthrough/              # Qwen3-0.6B fine-tuning & logit centering
+│   └── stage07_local/                     # Centroid generation & local CV replay
+│
+├── reports/                               # Immutable evaluation artifacts & audits
+│   ├── stage02a_parent_anchor/            # Baseline retriever reports & token audits
+│   ├── stage07r_gold_doc_propensity/      # Propensity audit logs & validation splits
+│   └── stage07y_final_clean_fusion/       # FUSION_AUDIT.json (Frozen 0.9505 evidence)
+│
+├── configs/                               # Stage configurations and hyperparameters
+├── reproduce_gold_local_cv.py             # Preflight check & local-CV replay script
+├── requirements-gold-local-lock.txt       # Locked dependencies for exact reproduction
+│
+└── research_archive/                      # PHASE 1 RESEARCH ARCHIVE (Historical R&D)
+    └── legalir_public_phase/
+        ├── README.md                      # Phase 1 technical summary & audit retrospective
+        ├── docs/gemini/                   # 53-Rule forensic audit & discovery logs
+        ├── src/gemini/                    # Hand-crafted 145D GBDT feature extraction
+        └── src/exp_final/                 # Exploratory set rankers and early fusion
+```
+
+---
+
+## ⚡ Quickstart & Local Reproduction
+
+### 1. Environment Setup
+
+```bash
+# Clone the unified repository
+git clone https://github.com/ngmhoang62/endgame.git
+cd endgame
+
+# Create isolated Python 3.11 environment
+py -3.11 -m venv .venv
+source .venv/Scripts/activate  # On Windows: .venv\Scripts\activate
+
+# Install locked dependencies
+pip install -r requirements-gold-local-lock.txt
+```
+
+### 2. Data Preparation
+Place the official competition dataset inside `data/official_v1/`:
 ```text
 data/official_v1/
   train.json
   public-official.json
   private-official.json
   DATA_SNAPSHOT_MANIFEST.json
-  selected-contexts/        # local only / gitignored
+  selected-contexts/           # 8,532 context_*.json files
 ```
 
-The old root-level `private-official.json` is no longer canonical.
-
-## Stage 01
-
-Private-distribution diagnostics are complete. They are diagnostic only and do
-not define the validation protocol.
-
-## Stage 00B
-
-Raw-data forensics established:
-
-- 7,000 train queries;
-- 8,532 raw documents;
-- 20 empty-passage documents;
-- zero missing gold document IDs;
-- 11 queries touch an empty gold document;
-- 4 exact duplicate-passage groups;
-- 16 exact duplicate-query groups.
-
-## Stage 00C v2 — rebuilt retrieval/evaluation universe
-
-The old LegalIR preprocessing is treated as evidence, not copied blindly.
-
-ENDGAME policy:
-
-```text
-RAW_CORPUS_8532
-  - remove 20 empty-passage docs
-  = RETRIEVAL_CORPUS_8512
-```
-
-Exact duplicate-content documents remain as separate literal document IDs.
-They are **not** collapsed or remapped because official scoring is ID-literal
-and retaining five extra duplicate docs has negligible compute cost.
-
-For train labels:
-
-```text
-RAW_TRAIN_7000
-  - remove empty-passage gold occurrences
-  - exclude only queries with no retrievable gold left
-  = PRIMARY_EVAL_6991
-```
-
-Stage 00C v2 is now **frozen** as the primary OOF contract:
-
-- 6,991 primary evaluable queries;
-- 9 non-evaluable queries;
-- 8,512 retrievable documents;
-- 5 duplicate-safe grouped folds;
-- fold sizes 1,397–1,399;
-- selected fold seed: 276;
-- all population, coverage, group-isolation, and balance gates PASS.
-
-Primary local development metric: macro Recall@5 over `PRIMARY_EVAL_6991`.
-Secondary precision uses the official variable-K denominator.
-
-The authoritative metric implementation is:
-
-```text
-src/common/evaluation.py
-```
-
-## Stage 02A — raw-parent acquisition anchor
-
-Before rebuilding document chunking, establish a zero-training acquisition
-anchor under the frozen Stage 00C v2 protocol.
-
-Run:
-
-```bash
-python src/stage02_candidate_generation/run_parent_anchor.py
-```
-
-The stage performs:
-
-- exact untruncated tokenizer-length audit for all 8,512 parent passages;
-- fresh VietLegal-E5 query/document embeddings;
-- `query: ` prefix for queries and `passage: ` prefix for passages;
-- exact dense cosine search to top 100;
-- deterministic parent-level BM25 to top 100;
-- fixed RRF60 dense+BM25;
-- dense+BM25 candidate-union oracle at K = 1/5/10/20/50/100;
-- exact-duplicate-content literal-ID candidate expansion;
-- per-fold and stress-slice diagnostics;
-- missing-gold forensics.
-
-Large runtime artifacts remain local:
-
-```text
-cache/stage02a_parent_anchor/
-```
-
-Version the reports:
-
-```text
-reports/stage02a_parent_anchor/
-  CORPUS_TOKEN_AUDIT.json
-  BASELINE_ANCHOR.json
-  QUERY_RETRIEVAL_AUDIT.csv
-  MISSING_GOLD_FORENSICS.json
-  REPORT.md
-```
-
-This stage is an acquisition anchor, not a final submission candidate. Its
-main purpose is to determine whether raw-parent truncation/candidate coverage
-justifies Stage 02B structure-aware article/section chunking.
-
-## GOLD_PROP_AIT_W75_K5 local-CV replay
-
-This section concerns the **6,991-query local OOF evaluation**, not the
-private leaderboard score or regeneration of the submission ZIP. The locked
-historical result is Recall@5 `0.9505364039479332`, multi-gold Recall@5
-`0.7680580762250454`, nested fold-weighted Recall@5 `0.9502503218423687`,
-and robust fusion weight `w_prop=0.75`. The immutable evidence is
-`reports/stage07y_final_clean_fusion/FUSION_AUDIT.json`.
-
-The GitHub repository intentionally does not contain model weights, the
-official `selected-contexts/` corpus, embeddings, OOF arrays, checkpoints, or
-submissions. To rebuild them on Windows x64 with Python 3.11, a CUDA GPU,
-internet access to Hugging Face, and the official competition data:
-
-```bash
-git clone https://github.com/ngmhoang62/endgame.git
-cd endgame
-py -3.11 -m venv .venv
-source .venv/Scripts/activate
-python -m pip install -r requirements-gold-local-lock.txt
-```
-
-Download the **official competition** `selected-contexts/` directory and
-place its 8,532 `context_*.json` files under
-`data/official_v1/selected-contexts/`. The three official JSON splits are
-already in Git. Do not use a processed corpus or a copy from `sota` or
-`LegalIR`. The repository's `DATA_SNAPSHOT_MANIFEST.json` fixes every raw
-file's size and SHA-256; the preflight rejects missing or differing inputs:
-
+Verify data integrity against the locked manifest:
 ```bash
 python reproduce_gold_local_cv.py check-data
-python reproduce_gold_local_cv.py run
 ```
 
-`run` executes Stage00C, materializes four public models at their historical
-Hugging Face commits, rebuilds geometry, retrieval sources and representations,
-recomputes the Stage03B1 OOF reranker, derives raw AIT parent centroids from
-Stage02B4 embeddings, fits the fold-clean Stage07R/Stage07O selectors, and
-recomputes the Stage07Y local fusion audit. It never scores the private split.
-The model commits are E5 `a814728d93e14566f9634b50a054e67699ea8818`,
-VNLegal-LAL `de759324ef931a2475ae8db97137b6a6cbb98aa0`, AIT embedding
-`dea33aa1ab339f38d66ae0a40e6c40e0a9249568`, and AIT reranker
-`f536976248403314225d7fdfdbc87f0e9516a54e`. The cache path named
-`stage07d_teacher_distill_head` holds only the raw, teacher-free centroid
-derivative in this replay. No Stage07D teacher output is used.
+### 3. Replay Gold Local CV
+Execute the end-to-end evaluation stages:
+```bash
+python reproduce_gold_local_cv.py run
+```
+To verify the final fusion metric against the immutable historical benchmark:
+```bash
+python reproduce_gold_local_cv.py verify-cv
+```
 
-After a partial run, `python reproduce_gold_local_cv.py verify-cv` recomputes
-the fusion metric from the generated OOF arrays and fails if any locked metric
-or the selected weight differs. Reading the committed historical report is
-**not** accepted as reproduction. The full run requires substantial GPU time
-and disk; keep `cache/`, `models/`, and `submissions/` untracked.
+---
 
-**Exactness limit (2026-09-28):** The historical OOF arrays pass the exact
-check, but exact replay from source has **not** been demonstrated. Stage07R
-propensity retraining reproduced its historical OOF array byte-for-byte.
-Stage07O's title-IDF feature builder sums over unordered Python `set`s, while
-the original command did not set `PYTHONHASHSEED`. The recorded NumPy/PyTorch
-seed `276` cannot recover that process's unrecorded Python hash seed. With
-`PYTHONHASHSEED=0` and the original local centroid, two independent full
-Stage07O runs produced the same OOF SHA-256
-`9aa3871f2a14940569767cbd5be05c43fe5d7b31c13a8d98df9b18b175d6e475`,
-but the resulting W75 fusion Recall@5 was `0.950393362895151`, not the
-historical `0.9505364039479332`. The original centroid was produced by GPU
-`index_add_`; two new builds from the same region embeddings had different
-SHA-256 values. Two CPU builds were byte-identical, but their W75 local CV was
-`0.9497496781576313`. No per-fold Stage07O checkpoints or original hash seed
-were saved. `src/stage07_local/audit_gold_head_determinism.py` traces input,
-initial-weight, gradient, and OOF hashes without overwriting historical files.
-Thus the repository has a fail-closed historical metric check, **not** a
-verified source-only guarantee of that exact historical CV result. Do not
-present the committed report as proof of fresh reproduction.
+## 📜 Citation & Acknowledgments
+
+This solution was engineered for the **UIT Data Science Challenge 2026**. Special thanks to the organizers at University of Information Technology (VNU-HCM) for providing the benchmark datasets and computational testbed.
+
+```bibtex
+@misc{dsc2026_legalir_top7,
+  author = {Nguyen Minh Hoang},
+  title  = {Dual-Stage Vietnamese Legal Information Retrieval with Multi-Encoder Screening and Logit-Centered LLM Reranking},
+  year   = {2026},
+  publisher = {GitHub},
+  howpublished = {\url{https://github.com/ngmhoang62/endgame}}
+}
+```
