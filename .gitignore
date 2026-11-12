@@ -40,11 +40,14 @@ fine_tuned_models/
 *.index
 *.tar.gz
 
-# Raw official corpus files remain local
-data/official_v1/selected-contexts/**
-
-# Rebuilt retrieval corpus is reproducible from official snapshot but large
-data/evaluation_v2/retrieval_corpus_8512.jsonl
+# Competition-restricted data, including queries, answer keys, and derived golds
+/data/
+**/selected-contexts/
+**/train.json
+**/warmup.json
+**/public-official.json
+**/private-official.json
+**/public-with-answers.json
 
 # Large DB / temp
 *.sqlite
@@ -62,8 +65,30 @@ research_archive/**/results/
 research_archive/**/public_test_dataset/
 research_archive/**/stats/
 
-# Keep lightweight scientific evidence versioned:
-#   data/official_v1/*.json (except selected-contexts/)
-#   data/evaluation_v2/*.json
+# Keep aggregate scientific evidence versioned:
 #   reports/**/*.json, *.jsonl, *.csv, *.md
 #   source code and configuration
+
+# Restricted query-level exports, answer predictions, and data-derived fixtures
+/submissions/
+/reports/stage00b_evaluation_population/QUERY_AUDIT.csv
+/reports/stage00c_evaluation_protocol_v2/FOLD_ASSIGNMENTS.csv
+/reports/stage01_private_distribution/PRIVATE_CLUSTERS.json
+/reports/stage01_private_distribution/PRIVATE_NEAREST_NEIGHBORS.csv
+/reports/stage01_private_distribution_v3/PRIVATE_CLUSTERS.json
+/reports/stage01_private_distribution_v3/PRIVATE_NEAREST_NEIGHBORS.csv
+/reports/stage01_private_query_audit/PRIVATE_QUERY_FEATURES.csv
+/reports/stage01_private_query_audit/PRIVATE_QUERY_FEATURES.jsonl
+/reports/stage01_query_preflight/QUERY_PREFLIGHT.json
+/reports/stage02a_parent_anchor/MISSING_GOLD_FORENSICS.json
+/reports/stage02a_parent_anchor/QUERY_RETRIEVAL_AUDIT.csv
+/reports/stage02b5_acquisition_oracle/CORE_UNCOVERED_FORENSICS.json
+/reports/stage05a_private_failure_map/CE_CHURN_TOP200.csv
+/reports/stage05a_private_failure_map/CE_UNCERTAINTY_TOP200.csv
+/reports/stage05a_private_failure_map/EXCLUDED_103.csv
+/reports/stage05a_private_failure_map/OVERLAP_AUDIT.json
+/reports/stage05a_private_failure_map/SCORED_1977.csv
+/reports/stage05a_private_failure_map/SCORED_1977_DIAGNOSTICS.jsonl
+/reports/stage05a_private_failure_map/SOURCE_DISAGREEMENT_TOP200.csv
+/research_archive/legalir_public_phase/tests/fixtures/lora_smoke_train.jsonl
+/research_archive/legalir_public_phase/tests/fixtures/lora_smoke_validation.jsonl
