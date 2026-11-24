@@ -1,11 +1,12 @@
 # Python / venv
-/.venv/
+.venv/
 venv/
 env/
 dsc_env/
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.ruff_cache/
 .ipynb_checkpoints/
 
 # IDE / OS / Agents
@@ -21,8 +22,11 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+*.pem
+*.key
 
 # Heavy generated caches and model weights
+.cache/
 cache/
 models/
 fine_tuned_models/
@@ -36,18 +40,30 @@ fine_tuned_models/
 *.npz
 *.pkl
 *.pickle
+*.joblib
 *.faiss
 *.index
-*.tar.gz
+*.h5
+*.hdf5
+*.parquet
+*.arrow
+*.zip
+*.7z
+*.tar
+*.tgz
+*.gz
 
 # Competition-restricted data, including queries, answer keys, and derived golds
-/data/
+data/
+datasets/
 **/selected-contexts/
 **/train.json
 **/warmup.json
 **/public-official.json
 **/private-official.json
 **/public-with-answers.json
+*.jsonl
+*.ndjson
 
 # Large DB / temp
 *.sqlite
@@ -56,21 +72,26 @@ fine_tuned_models/
 *.tmp
 *.temp
 
-# Submission ZIP bytes are local
-submissions/**/*.zip
-
-# LegalIR Research Archive local data & cache
-research_archive/**/cache/
-research_archive/**/results/
-research_archive/**/public_test_dataset/
-research_archive/**/stats/
-
-# Keep aggregate scientific evidence versioned:
-#   reports/**/*.json, *.jsonl, *.csv, *.md
-#   source code and configuration
-
-# Restricted query-level exports, answer predictions, and data-derived fixtures
+# Generated runs and submissions stay local
+/results/
 /submissions/
+/artifacts/*
+!/artifacts/stage07b/
+/artifacts/stage07b/*
+!/artifacts/stage07b/run_qwen06b_gold_supervised_l4.py
+
+# Local inputs and reference copies for the archived experiments
+/research_archive/**/results/
+/research_archive/**/public_test_dataset/
+/research_archive/**/stats/
+/research_archive/**/tests/fixtures/
+/research_archive/**/docs/*.pdf
+
+# Keep aggregate scientific evidence versioned. Exclude per-record exports
+# and input manifests that enumerate competition records.
+/reports/stage00_data_snapshot/DATA_SNAPSHOT.json
+/reports/stage00b_evaluation_population/EVALUATION_POPULATION_AUDIT.json
+/reports/stage00b_evaluation_population/NEAR_DUPLICATE_CANDIDATES.csv
 /reports/stage00b_evaluation_population/QUERY_AUDIT.csv
 /reports/stage00c_evaluation_protocol_v2/FOLD_ASSIGNMENTS.csv
 /reports/stage01_private_distribution/PRIVATE_CLUSTERS.json
@@ -82,20 +103,15 @@ research_archive/**/stats/
 /reports/stage01_query_preflight/QUERY_PREFLIGHT.json
 /reports/stage02a_parent_anchor/MISSING_GOLD_FORENSICS.json
 /reports/stage02a_parent_anchor/QUERY_RETRIEVAL_AUDIT.csv
+/reports/stage02b0_structure_geometry/STRUCTURE_GEOMETRY.json
 /reports/stage02b5_acquisition_oracle/CORE_UNCOVERED_FORENSICS.json
 /reports/stage05a_private_failure_map/CE_CHURN_TOP200.csv
 /reports/stage05a_private_failure_map/CE_UNCERTAINTY_TOP200.csv
 /reports/stage05a_private_failure_map/EXCLUDED_103.csv
 /reports/stage05a_private_failure_map/OVERLAP_AUDIT.json
 /reports/stage05a_private_failure_map/SCORED_1977.csv
-/reports/stage05a_private_failure_map/SCORED_1977_DIAGNOSTICS.jsonl
 /reports/stage05a_private_failure_map/SOURCE_DISAGREEMENT_TOP200.csv
-/research_archive/legalir_public_phase/tests/fixtures/lora_smoke_train.jsonl
-/research_archive/legalir_public_phase/tests/fixtures/lora_smoke_validation.jsonl
 
-# Restricted archived training bundles, payloads, and query probes
-/artifacts/stage07n_a100_fulltrain_bundle.zip
-/artifacts/stage07n_private_payload/
-/research_archive/legalir_public_phase/tests/fixtures/exp030_real_smoke_qids.json
+# Machine-local model manifests
 /reports/stage00_model_materialization/vietlegal-e5/MODEL_MANIFEST.json
 /reports/stage02b3_vietnamese_model_materialization/vietlegal_harrier_0_6b/MODEL_MANIFEST.json
