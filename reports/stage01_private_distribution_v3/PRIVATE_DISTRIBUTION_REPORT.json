@@ -10,7 +10,7 @@
     "id": "mainguyen9/vietlegal-e5",
     "resolved_revision_sha": "a814728d93e14566f9634b50a054e67699ea8818",
     "content_fingerprint": "d4ee124487f970cf202bda4e95e45d4823638f8fa1f85509180758296a51ae40",
-    "local_path": "D:\\Study\\DSC2026\\endgame\\models\\vietlegal-e5",
+    "local_path": "models/vietlegal-e5",
     "historical_model_reused": false,
     "interface": "SentenceTransformer",
     "fix_mistral_regex": true,

@@ -1,6 +1,6 @@
 {
   "generated_at_utc": "2026-09-19T05:49:33.048066+00:00",
-  "input_path": "D:\\Study\\DSC2026\\endgame\\private-official.json",
+  "input_path": "private-official.json",
   "input_sha256": "9da4e0cb84204fed924251c35744c93879556e67a440332015ea3b62f3c355bc",
   "top_level_type": "dict",
   "n_queries": 2080,

@@ -6,7 +6,7 @@
   "scientific_role": "Vietnamese retrieval fine-tune",
   "model_id": "AITeamVN/Vietnamese_Embedding",
   "resolved_revision_sha": "dea33aa1ab339f38d66ae0a40e6c40e0a9249568",
-  "target_path": "D:\\Study\\DSC2026\\endgame\\models\\retrievers_vi\\aiteamvn-vietnamese-embedding",
+  "target_path": "models/retrievers_vi/aiteamvn-vietnamese-embedding",
   "historical_model_reused": false,
   "parameter_count": 567754752,
   "parameter_billions": 0.567754752,

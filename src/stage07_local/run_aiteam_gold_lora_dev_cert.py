@@ -17,7 +17,7 @@ Scientific split:
   CERT  : fold_3 + fold_4, touched only if DEV gate passes
 
 Model:
-  AITeamVN/Vietnamese_Reranker (already used/registered in ENDGAME)
+  AITeamVN/Vietnamese_Reranker (already used/registered in Vietnamese LegalIR)
   LoRA r=16 on attention query/value + trainable classifier.
   Final inference can merge the adapter into the same 0.568B base model.
 

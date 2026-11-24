@@ -5,7 +5,7 @@
   "candidate_key": "vnlegal_lal",
   "model_id": "darklethelong/vnlegal-lal",
   "resolved_revision_sha": "de759324ef931a2475ae8db97137b6a6cbb98aa0",
-  "target_path": "D:\\Study\\DSC2026\\endgame\\models\\retrievers\\vnlegal-lal",
+  "target_path": "models/retrievers/vnlegal-lal",
   "historical_model_reused": false,
   "content_fingerprint": "34a3a7140cb25179734d8cf2c04c821a25cb1cfd1f3c7ac1792883ee82c110f1",
   "parameter_count": 596049920,

@@ -6,7 +6,7 @@
   "scientific_role": "PhoBERT Vietnamese bi-encoder with Zalo legal training",
   "model_id": "bkai-foundation-models/vietnamese-bi-encoder",
   "resolved_revision_sha": "84f9d9ada0d1a3c37557398b9ae9fcedcdf40be0",
-  "target_path": "D:\\Study\\DSC2026\\endgame\\models\\retrievers_vi\\bkai-vietnamese-bi-encoder",
+  "target_path": "models/retrievers_vi/bkai-vietnamese-bi-encoder",
   "historical_model_reused": false,
   "parameter_count": 134998272,
   "parameter_billions": 0.134998272,

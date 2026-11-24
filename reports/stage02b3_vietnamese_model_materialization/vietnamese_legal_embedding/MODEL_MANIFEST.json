@@ -6,7 +6,7 @@
   "scientific_role": "Vietnamese legal retrieval fine-tune",
   "model_id": "bqbbao6/vietnamese-legal-embedding",
   "resolved_revision_sha": "7568a60f24a415e3597a74e423728272c929eb0b",
-  "target_path": "D:\\Study\\DSC2026\\endgame\\models\\retrievers_vi\\vietnamese-legal-embedding",
+  "target_path": "models/retrievers_vi/vietnamese-legal-embedding",
   "historical_model_reused": false,
   "parameter_count": 278043648,
   "parameter_billions": 0.278043648,

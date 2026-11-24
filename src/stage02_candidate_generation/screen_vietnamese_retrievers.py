@@ -6,7 +6,7 @@ Scientific isolation:
 - One vector per region.
 - No additional splitting.
 - No overlap.
-- No metadata/title prefix added by ENDGAME.
+- No metadata/title prefix added by Vietnamese LegalIR.
 - Exact parent score = max cosine over that parent's fixed regions.
 - Each model keeps its own documented tokenizer/prompt/pooling/context contract.
 - Long regions are truncated, not split, during this MODEL screen.

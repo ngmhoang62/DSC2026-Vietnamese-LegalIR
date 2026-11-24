@@ -6,7 +6,7 @@
   "scientific_role": "Vietnamese-focused compact embedding",
   "model_id": "contextboxai/halong_embedding",
   "resolved_revision_sha": "b57776031035f70ed2030d2e35ecc533eb0f8f71",
-  "target_path": "D:\\Study\\DSC2026\\endgame\\models\\retrievers_vi\\halong-embedding",
+  "target_path": "models/retrievers_vi/halong-embedding",
   "historical_model_reused": false,
   "parameter_count": 278043648,
   "parameter_billions": 0.278043648,

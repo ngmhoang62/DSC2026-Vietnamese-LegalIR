@@ -192,7 +192,7 @@ def probe_lal(path, targets):
         str(path), local_files_only=True, torch_dtype=torch.float16
     ).cuda().eval()
 
-    native = 2048  # frozen ENDGAME operational contract from Stage02B1 repair
+    native = 2048  # frozen Vietnamese LegalIR operational contract from Stage02B1 repair
     text = build_long_text(tokenizer, max(targets))
     results = []
 

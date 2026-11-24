@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """Stage 02B1 prerequisite — fresh candidate retriever materialization.
 
-Downloads each candidate from Hugging Face into ENDGAME, pins an immutable Hub
+Downloads each candidate from Hugging Face into Vietnamese LegalIR, pins an immutable Hub
 commit SHA, fingerprints the local snapshot, loads it locally, counts actual
 parameters, verifies native max sequence length, and runs a short query/document
 embedding smoke test.
@@ -226,7 +226,7 @@ def materialize_one(key: str, force: bool) -> dict[str, Any]:
             local_manifest = target / "_ENDGAME_MODEL_MANIFEST.json"
             if not local_manifest.exists():
                 raise FileExistsError(
-                    f"{target} exists without ENDGAME manifest. "
+                    f"{target} exists without Vietnamese LegalIR manifest. "
                     "Refusing to mix files; use --force deliberately."
                 )
             old = json.loads(local_manifest.read_text(encoding="utf-8"))

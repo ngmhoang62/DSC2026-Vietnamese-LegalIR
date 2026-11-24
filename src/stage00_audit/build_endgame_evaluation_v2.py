@@ -20,7 +20,7 @@ Expected result from the frozen official snapshot:
 - NON_EVALUABLE_9
 
 No historical LegalIR exclusion artifact is trusted to build this universe.
-Everything is derived again from raw ENDGAME data.
+Everything is derived again from raw Vietnamese LegalIR data.
 
 Leakage grouping (label-free):
 - exact/accent-normalized duplicate, OR
@@ -666,7 +666,7 @@ def main() -> int:
         "historical_legalir_comparison": {
             "expected_same_primary_query_count": 6991,
             "important_difference": (
-                "ENDGAME v2 does NOT exclude/remap exact duplicate-content document IDs."
+                "Vietnamese LegalIR v2 does NOT exclude/remap exact duplicate-content document IDs."
             ),
         },
     }
@@ -771,7 +771,7 @@ def main() -> int:
     )
 
     lines = [
-        "# Stage 00C v2 — ENDGAME Evaluation Protocol",
+        "# Stage 00C v2 — Vietnamese LegalIR Evaluation Protocol",
         "",
         f"**Status: {status}**",
         "",
@@ -832,7 +832,7 @@ def main() -> int:
         "",
         "- Same intended evaluable-query count: **6991**.",
         "- Same empty-passage principle: **yes**.",
-        "- Different duplicate policy: ENDGAME keeps all non-empty duplicate-content IDs literal.",
+        "- Different duplicate policy: Vietnamese LegalIR keeps all non-empty duplicate-content IDs literal.",
         "",
     ]
     (OUT_REPORT / "REPORT.md").write_text("\n".join(lines), encoding="utf-8")

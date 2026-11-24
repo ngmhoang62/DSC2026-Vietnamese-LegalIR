@@ -1,4 +1,4 @@
-# ENDGAME runtime (Python 3.11 recommended)
+# Vietnamese LegalIR runtime (Python 3.11 recommended)
 # Keep Transformers on v4: historical Jina code is not compatible with transformers v5.
 
 # Core scientific stack

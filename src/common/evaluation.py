@@ -1,4 +1,4 @@
-"""Authoritative ENDGAME evaluation utilities.
+"""Authoritative Vietnamese LegalIR evaluation utilities.
 
 Two label views may exist:
 - primary local OOF: retrievable literal gold IDs after empty-passage filtering;

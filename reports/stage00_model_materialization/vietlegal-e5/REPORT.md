@@ -3,7 +3,7 @@
 - Status: **PASS**
 - Model: `mainguyen9/vietlegal-e5`
 - Hub commit: `a814728d93e14566f9634b50a054e67699ea8818`
-- Local target: `D:\Study\DSC2026\endgame\models\vietlegal-e5`
+- Local target: `models/vietlegal-e5`
 - Embedding dimension: **1024**
 - Max sequence length: **512**
 - Tokenizer: `XLMRobertaTokenizerFast`

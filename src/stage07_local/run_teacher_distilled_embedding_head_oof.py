@@ -5,7 +5,7 @@ Stage07D — frozen-embedding teacher distillation head.
 Purpose
 -------
 Distill the already-computed Qwen3-Reranker-4B training-time teacher targets
-into a *tiny* residual reranker that uses only already-approved/frozen ENDGAME
+into a *tiny* residual reranker that uses only already-approved/frozen Vietnamese LegalIR
 signals at inference:
   - AITeam query embedding (already active retriever)
   - AITeam document parent centroid built from cached region embeddings

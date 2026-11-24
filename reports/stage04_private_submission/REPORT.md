@@ -1,4 +1,4 @@
-# Stage 04 — ENDGAME Private Submission
+# Stage 04 — Vietnamese LegalIR Private Submission
 
 **READY_FOR_PRIVATE_SUBMISSION**
 

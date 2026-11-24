@@ -1,4 +1,4 @@
-"""Deterministic query text handling for ENDGAME.
+"""Deterministic query text handling for Vietnamese LegalIR.
 
 Important separation:
 - model_text(): conservative normalization used for model/retriever input.

@@ -40,4 +40,4 @@
 ## Next decision
 
 Inspect `NEAR_DUPLICATE_CANDIDATES.csv` and choose the grouping rule.
-Only after that will Stage 00C materialize the new ENDGAME folds.
+Only after that will Stage 00C materialize the new Vietnamese LegalIR folds.

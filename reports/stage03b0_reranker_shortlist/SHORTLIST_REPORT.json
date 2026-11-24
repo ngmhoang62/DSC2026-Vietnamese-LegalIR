@@ -39,6 +39,6 @@
       "gold_occurrence_coverage": 0.978232362968791
     }
   },
-  "oof_top50_path": "D:\\Study\\DSC2026\\endgame\\cache\\stage03b_reranker\\oof_rank_selector_top50_idx.npy",
-  "fulltrain_model_path": "D:\\Study\\DSC2026\\endgame\\cache\\stage03b_reranker\\fulltrain_rank_selector.joblib"
+  "oof_top50_path": "cache/stage03b_reranker/oof_rank_selector_top50_idx.npy",
+  "fulltrain_model_path": "cache/stage03b_reranker/fulltrain_rank_selector.joblib"
 }

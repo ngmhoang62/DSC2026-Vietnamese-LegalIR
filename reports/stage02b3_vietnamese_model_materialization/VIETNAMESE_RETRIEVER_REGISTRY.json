@@ -70,7 +70,7 @@
       "parameter_billions": null,
       "max_seq_length": 512,
       "embedding_dimension": 1024,
-      "target_path": "D:\\Study\\DSC2026\\endgame\\models\\vietlegal-e5"
+      "target_path": "models/vietlegal-e5"
     },
     "vnlegal_lal": {
       "candidate_key": "vnlegal_lal",
@@ -81,7 +81,7 @@
       "parameter_billions": 0.59604992,
       "max_seq_length": 2048,
       "embedding_dimension": 1024,
-      "target_path": "D:\\Study\\DSC2026\\endgame\\models\\retrievers\\vnlegal-lal"
+      "target_path": "models/retrievers/vnlegal-lal"
     }
   },
   "failed": {},

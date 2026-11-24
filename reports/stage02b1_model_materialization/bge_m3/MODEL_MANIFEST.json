@@ -5,7 +5,7 @@
   "candidate_key": "bge_m3",
   "model_id": "BAAI/bge-m3",
   "resolved_revision_sha": "5617a9f61b028005a4858fdac845db406aefb181",
-  "target_path": "D:\\Study\\DSC2026\\endgame\\models\\retrievers\\bge-m3",
+  "target_path": "models/retrievers/bge-m3",
   "historical_model_reused": false,
   "content_fingerprint": "2cd9870c4dd691399600f41f5b0d11ced583177dd9b5a75e0ed1afe15664a38e",
   "parameter_count": 567754752,

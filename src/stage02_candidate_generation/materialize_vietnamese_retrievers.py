@@ -17,7 +17,7 @@ Already-materialized anchors:
 
 For each fresh candidate:
 - resolve main -> immutable Hub SHA;
-- download under ENDGAME/models/retrievers_vi/;
+- download under models/retrievers_vi/;
 - hash local snapshot;
 - load strictly locally;
 - count actual parameters;
@@ -190,7 +190,7 @@ def materialize(key, spec, force=False):
                 )
         else:
             raise RuntimeError(
-                f"{target} exists without ENDGAME manifest; refusing to mix files."
+                f"{target} exists without Vietnamese LegalIR manifest; refusing to mix files."
             )
 
     if not target.exists():

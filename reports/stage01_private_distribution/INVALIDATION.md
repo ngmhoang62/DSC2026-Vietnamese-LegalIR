@@ -3,7 +3,7 @@
 Status: **PARTIALLY INVALIDATED**
 
 The Stage 01B v2 run loaded its embedding model from the historical
-`D:/Study/DSC2026/sota/.../vietlegal-e5` bundle. During tokenizer loading,
+`sota/.../vietlegal-e5` bundle. During tokenizer loading,
 Transformers emitted the `incorrect regex pattern` warning and recommended
 `fix_mistral_regex=True`.
 

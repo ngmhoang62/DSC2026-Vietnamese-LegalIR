@@ -15,7 +15,7 @@ CERT:
 Why
 ===
 Do not inherit historical `220 words / overlap 70` as truth.
-Benchmark evidence localization from scratch under the CURRENT ENDGAME world.
+Benchmark evidence localization from scratch under the CURRENT Vietnamese LegalIR world.
 
 Semantic witnesses
 ------------------

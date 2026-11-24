@@ -6,7 +6,7 @@ SentenceTransformer. That backend had truncation configured at 512, so lengths
 were silently clipped and the resulting "0 docs >512" conclusion is invalid.
 
 This script:
-- loads a fresh tokenizer from ENDGAME/models/vietlegal-e5;
+- loads a fresh tokenizer from models/vietlegal-e5;
 - explicitly disables backend truncation;
 - sets a very large model_max_length for audit only;
 - calls the tokenizer with truncation=False;

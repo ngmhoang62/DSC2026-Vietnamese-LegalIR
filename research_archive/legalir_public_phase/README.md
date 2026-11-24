@@ -11,7 +11,7 @@ This directory preserves the complete experimentation history of **Phase 1 (Lega
 - Advanced structural chunking (`structural_chunker_v3.py`, `parent_child_consensus_scope_chunks.py`).
 - Dense + Sparse retrieval (`VietLegal-E5`, `BGE-M3`, `BKAI-BiEncoder`, `BM25Okapi`).
 - Feature engineering & Learning-to-Rank (GBDT) with up to **145 hand-crafted features** capturing document hierarchy, citations, kinship relationships, and law authority.
-- Extensive diagnostic evaluations and the **Forensic Audit** that prompted the cleanroom reconstruction of the system in `endgame`.
+- Extensive diagnostic evaluations and the **Forensic Audit** that prompted the cleanroom reconstruction of the Vietnamese LegalIR pipeline for the private phase.
 
 ---
 
@@ -31,7 +31,7 @@ This directory preserves the complete experimentation history of **Phase 1 (Lega
 ### 3. The Turning Point: The Forensic Audit
 During deployment verification for public holdouts, deep diagnostics revealed:
 - **Article Parity Failure**: A subtle alignment shift between training queries and official test evaluation schemas across 53 legal articles.
-- **The Engineering Pivot**: Rather than patching corrupted features, the decision was made to freeze `LegalIR` as historical evidence and engineer a ground-up **Cleanroom Pipeline (`endgame`)** with strict grouped-fold cross-validation, moderate region segmentation, and LLM-centric reranking.
+- **The Engineering Pivot**: Rather than patching corrupted features, the decision was made to freeze `LegalIR` as historical evidence and engineer a ground-up **Vietnamese LegalIR pipeline** with strict grouped-fold cross-validation, moderate region segmentation, and LLM-centric reranking.
 
 Detailed audit reports are preserved in:
 - [`docs/gemini/forensic_audit_h61_deployment_parity_and_leakage.md`](docs/gemini/forensic_audit_h61_deployment_parity_and_leakage.md)

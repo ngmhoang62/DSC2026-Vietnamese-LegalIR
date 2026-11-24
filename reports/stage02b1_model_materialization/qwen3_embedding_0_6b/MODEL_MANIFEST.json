@@ -5,7 +5,7 @@
   "candidate_key": "qwen3_embedding_0_6b",
   "model_id": "Qwen/Qwen3-Embedding-0.6B",
   "resolved_revision_sha": "97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3",
-  "target_path": "D:\\Study\\DSC2026\\endgame\\models\\retrievers\\qwen3-embedding-0.6b",
+  "target_path": "models/retrievers/qwen3-embedding-0.6b",
   "historical_model_reused": false,
   "content_fingerprint": "9d4b2224733ccc1f11bae7346e6e92c74ae9a1feeee02eb8ed63c392222c99ac",
   "parameter_count": 595776512,

@@ -1,4 +1,4 @@
-# Stage 00C v2 — ENDGAME Evaluation Protocol
+# Stage 00C v2 — Vietnamese LegalIR Evaluation Protocol
 
 **Status: PASS**
 
@@ -59,4 +59,4 @@
 
 - Same intended evaluable-query count: **6991**.
 - Same empty-passage principle: **yes**.
-- Different duplicate policy: ENDGAME keeps all non-empty duplicate-content IDs literal.
+- Different duplicate policy: Vietnamese LegalIR keeps all non-empty duplicate-content IDs literal.

@@ -317,7 +317,7 @@ def main():
     OUT.mkdir(parents=True,exist_ok=True)
     CACHE.mkdir(parents=True,exist_ok=True)
 
-    print("[1/7] Load frozen ENDGAME world + teacher targets",flush=True)
+    print("[1/7] Load frozen Vietnamese LegalIR world + teacher targets",flush=True)
     qids,questions,golds,folds,stress,docs,short,X45,Xext,y,aq,lq,teacher=load_world(args.teacher)
     print(f"  teacher={teacher.shape}; TRAINING-TIME ONLY",flush=True)
 

@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 """Build the ONLY large file that must be transferred to Colab for Stage07B.
 
-Run on the LOCAL full ENDGAME repo:
+Run on the LOCAL full Vietnamese LegalIR repo:
     python src/stage07_breakthrough/prepare_stage07b_colab_payload.py
 
 It reads the existing local caches, pre-materializes all top-20 evidence bundles,
 and creates:
     artifacts/stage07b_colab_payload.tar.gz
 
-The remote Colab runtime does NOT need the whole endgame repo.
+The remote Colab runtime does NOT need the whole Vietnamese LegalIR repo.
 """
 from __future__ import annotations
 import hashlib, io, json, pickle, shutil, sys, tarfile, time
@@ -121,7 +121,7 @@ def main():
         "queries":len(qids),"depth":DEPTH,"full_depth":FULL,
         "candidate_feature_dim":45,
         "files":{},
-        "claim":"self-contained Colab payload; no full ENDGAME repo required remotely"
+        "claim":"self-contained Colab payload; no full Vietnamese LegalIR repo required remotely"
     }
     print("[6/7] hashes",flush=True)
     for p in sorted(OUT.iterdir()):

@@ -1,12 +1,12 @@
 #!/usr/bin/env python
-"""Materialize a fresh, revision-pinned Hugging Face model inside ENDGAME.
+"""Materialize a fresh, revision-pinned Hugging Face model inside Vietnamese LegalIR.
 
 v1.1 numerical contract:
 - SentenceTransformer may return unit-normalized FP16 vectors whose measured
   float32 norm differs from 1 by a few 1e-4 due to half precision.
 - We audit that raw drift is <= 1e-3.
 - We then re-normalize in float32 and require <= 2e-6 norm error.
-- Downstream ENDGAME code uses the same explicit float32 post-normalization.
+- Downstream Vietnamese LegalIR code uses the same explicit float32 post-normalization.
 
 Run:
     python src/stage00_audit/materialize_hf_model.py
@@ -198,7 +198,7 @@ def main() -> int:
                 f"max_error={raw_max_error:.8g}, norms={raw_norms.tolist()}"
             )
 
-        # Canonical ENDGAME representation: explicit float32 L2 normalization.
+        # Canonical Vietnamese LegalIR representation: explicit float32 L2 normalization.
         embeddings = normalize_f32(raw_embeddings)
         final_norms = np.linalg.norm(embeddings, axis=1)
         final_max_error = float(np.max(np.abs(final_norms - 1.0)))

@@ -6,7 +6,7 @@
   "preflight_sha256": "eef6f3261e3996f6781c6ec4547667c42360aebced5b566667d3fce1dd4efc07",
   "lexical_contract": "char_wb TF-IDF 3-5gram; transductive vocabulary; labels unused",
   "embedding_contract": {
-    "model": "D:\\Study\\DSC2026\\sota\\cache\\research_v2_e5_confirmation\\bundle-v1\\vietlegal-e5",
+    "model": "sota/cache/research_v2_e5_confirmation/bundle-v1/vietlegal-e5",
     "prefix": "query: ",
     "pool": "mean_attention_mask",
     "normalize": "L2",
@@ -237,6 +237,6 @@
   "notes": [
     "TRAIN is the primary reference population.",
     "PUBLIC is a secondary released-distribution reference.",
-    "HIST_CAL_* are historical coordinates only and must not define ENDGAME promotion gates."
+    "HIST_CAL_* are historical coordinates only and must not define Vietnamese LegalIR promotion gates."
   ]
 }

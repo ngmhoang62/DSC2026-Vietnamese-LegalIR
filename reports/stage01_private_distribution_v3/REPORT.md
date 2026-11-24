@@ -1,6 +1,6 @@
 # Stage 01B v3.1 — Private Distribution Diagnostic
 
-**Fresh ENDGAME model only. Diagnostic, not evaluation protocol.**
+**Fresh Vietnamese LegalIR model only. Diagnostic, not evaluation protocol.**
 
 - Model: `mainguyen9/vietlegal-e5`
 - Hub SHA: `a814728d93e14566f9634b50a054e67699ea8818`

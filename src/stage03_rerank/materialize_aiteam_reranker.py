@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Materialize a fresh pinned AITeamVN/Vietnamese_Reranker snapshot for ENDGAME."""
+"""Materialize a fresh pinned AITeamVN/Vietnamese_Reranker snapshot for Vietnamese LegalIR."""
 from __future__ import annotations
 import hashlib, json, platform, sys
 from pathlib import Path
