@@ -7,7 +7,7 @@ It audits:
 1. raw official label population;
 2. corpus/document identity and data-quality issues;
 3. exact/punctuation/accent query duplicates;
-4. semantic near-duplicate candidates using the fresh ENDGAME VietLegal-E5;
+4. semantic near-duplicate candidates using the fresh Vietnamese LegalIR VietLegal-E5;
 5. gold-frequency / answer-count strata;
 6. threshold sensitivity of near-duplicate graph components.
 
@@ -119,7 +119,7 @@ class UnionFind:
 def verify_snapshot():
     manifest_path = DATA / "DATA_SNAPSHOT_MANIFEST.json"
     if not manifest_path.exists():
-        raise RuntimeError("Missing official data snapshot. Run snapshot_official_data.py first.")
+        raise RuntimeError(f"Missing official data snapshot manifest at {manifest_path}")
     manifest = read_json(manifest_path)
     for filename in ("train.json", "public-official.json", "private-official.json"):
         p = DATA / filename
@@ -130,7 +130,7 @@ def verify_snapshot():
 
 def verify_model():
     if not MODEL_MANIFEST.exists() or not MODEL_DIR.exists():
-        raise RuntimeError("Fresh ENDGAME VietLegal-E5 materialization missing.")
+        raise RuntimeError("Fresh Vietnamese LegalIR VietLegal-E5 materialization missing.")
     m = read_json(MODEL_MANIFEST)
     if m.get("status") != "PASS" or m.get("historical_model_reused") is not False:
         raise RuntimeError("Fresh model contract invalid.")
@@ -602,7 +602,7 @@ def main() -> int:
         "## Next decision",
         "",
         "Inspect `NEAR_DUPLICATE_CANDIDATES.csv` and choose the grouping rule.",
-        "Only after that will Stage 00C materialize the new ENDGAME folds.",
+        "Only after that will Stage 00C materialize the new Vietnamese LegalIR folds.",
         "",
     ]
     (OUT / "REPORT.md").write_text("\n".join(lines), encoding="utf-8")

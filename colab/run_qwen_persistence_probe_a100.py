@@ -61,7 +61,7 @@ def batch_infer(model, tok, evidence, idx, maxlen, batch_queries=4):
 def metrics(prior, raw, alpha, y, gold_count, idx):
     final = n.zrows(prior)
     final[:, :DEPTH] += float(alpha) * raw
-    m, q, _ = n.evaluate(final, y, gold_count, idx)
+    m, q = n.evaluate(final, y, gold_count, idx)
     return m, q
 
 def main():
@@ -103,7 +103,7 @@ def main():
     if not np.array_equal(got_train, train_idx):
         raise RuntimeError("train population drift")
     prior = n.held_prior(X45, y, train_idx, held)
-    bm, _, _ = n.evaluate(prior, y, gold_count, held)
+    bm, _ = n.evaluate(prior, y, gold_count, held)
     print(f"[baseline] fold3={bm['recall_at_5']:.9f}", flush=True)
 
     # Small paired test first.
